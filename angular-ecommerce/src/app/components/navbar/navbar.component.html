@@ -1,0 +1,31 @@
+<div class="container" *ngIf="show_navbar">
+    <div class="nav-logo">
+        <a routerLink="/products"><span>eShop</span></a>
+    </div>
+
+    <div class="nav-search">
+
+        <input type="text" name="search"  #myInput
+            placeholder="search for a product..."
+            (keyup.enter)="doSearch(myInput.value)">
+        
+        <div class="icon-button" (click)="doSearch(myInput.value)">
+            <fa-icon class="search-icon" [icon]="searchIcon" ></fa-icon>
+        </div>
+
+    </div>
+
+    <div class="nav-list">
+        <div class="login">
+            <a *ngIf="!isLoggedIn" routerLink="login">Login</a>
+            <!-- <a *ngIf="isLoggedIn">User</a> -->
+            <a *ngIf="isLoggedIn" (click)="logOut()" style="cursor: pointer;">Logout</a>
+        </div>
+        <div class="cart" >
+            <a routerLink="cart-details" matBadge="{{totalQuantity}}" matBadgePosition="before" matBadgeColor="warn">
+                <mat-icon>shopping_cart</mat-icon>
+                <span>cart</span>
+            </a>
+        </div>
+    </div>
+</div>

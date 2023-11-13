@@ -1,0 +1,21 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    height: 60px;
+    z-index: 1;
+    position: relative;
+}
+
+.links {
+    display: flex;
+    gap: 30px
+}
+
+fa-icon {
+    font-size: 20px;
+    color: white;
+}

@@ -1,0 +1,33 @@
+/* .sidebar {
+    position:absolute;
+} */
+.menu-sidebar {
+    position:fixed;
+    width: 200px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(48, 48, 48);
+    overflow-y: scroll;
+    padding-top: 25px;
+}
+.menu-sidebar::-webkit-scrollbar {
+    display: none;
+}
+.navbar-sidebar {
+    padding: 35px;
+    padding-bottom: 0;
+}
+.navbar-sidebar .navbar-list li a {
+    display: block;
+    color: white;
+    font-size: 16px;
+    padding: 5px 0;
+    text-decoration: none;
+}
+.navbar-list li {
+    list-style: none;
+}
+.navbar-sidebar .navbar-list li a:hover {
+    color: gray;
+  }

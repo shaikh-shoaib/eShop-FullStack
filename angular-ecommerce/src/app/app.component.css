@@ -1,0 +1,23 @@
+.content-outer-container {
+    min-height: 100%;
+    overflow: hidden;
+    background: #e5e5e5;
+    padding-bottom: 8vh;
+}
+.content-inner-container {
+    padding-bottom: 60px;
+    padding-left: 200px;
+}
+.page-container {
+    margin-top: 60px;
+}
+
+.footer-container {
+    height: 24px;
+    margin-top: -60px;
+}
+
+.footer-content {
+    margin: 0 auto;
+    text-align: center;
+}

@@ -1,0 +1,75 @@
+<div class="login">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Login</h2>
+    </div>
+    <div class="login-body">
+      <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+        <div class="login-email">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="abc@example.com"
+              formControlName="email"
+              required
+            />
+            <button type="button" mat-icon-button matSuffix>
+              <mat-icon>email</mat-icon>
+            </button>
+            <mat-error *ngIf="!reactiveForm.get('email')!.valid"
+              >Enter a valid mail</mat-error
+            >
+            <!-- <mat-error
+              *ngIf="reactiveForm.get('email')!.hasError('whitespace')"
+              >Email cannot contain space</mat-error
+            > -->
+          </mat-form-field>
+        </div>
+
+        <div class="login-password">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hide ? 'password' : 'text'"
+              required
+            />
+            <button
+              type="button"
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="reactiveForm.get('password')!.hasError('required')"
+              >Enter password</mat-error
+            >
+            <!-- <mat-error
+              *ngIf="reactiveForm.get('password')!.hasError('whitespace')"
+              >Password cannot contain space</mat-error
+            > -->
+            <mat-error *ngIf="reactiveForm.get('password')!.hasError('pattern')"
+              >Password should be 8 characters in length, Lowercase letters,
+              Uppercase letters, Numbers, Special characters</mat-error
+            >
+          </mat-form-field>
+        </div>
+
+        <div class="submit">
+          <button type="submit" [disabled]="!reactiveForm.valid">Login</button>
+        </div>
+
+        <div class="login-signup">
+          <p>
+            Dont have an account?
+            <a routerLink="/signup">Signup</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

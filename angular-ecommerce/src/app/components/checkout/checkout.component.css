@@ -1,0 +1,134 @@
+.main-content {
+    padding: 40px;
+}
+
+form{
+    width: 60%;
+}
+
+.form-area {
+    width: 100%;
+    position:relative;
+    margin-bottom:45px;
+    padding:50px 20px;
+    border:3px solid #ccc;
+}
+
+.form-area h3{
+    position:absolute;
+    top:-26px;
+    left:15px;
+    background:#e5e5e5;
+    padding:10px 20px;
+    font-weight:500;
+    z-index:1;
+    display:inline-block
+}
+
+.section-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.input-name  {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20%;
+}
+
+.input-name-div{
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.input-email {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+}
+
+.input-first, .input-last{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+input[type=text] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    outline: 1px solid gray;
+    width: 100%;
+}
+.expiry-date{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20%;
+}
+.date {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.expiry-date select, .date select {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    outline: 1px solid gray;
+    width: 100%;
+}
+
+.input-country, .input-street, .input-city, .input-pin, 
+.input-card-type, .input-card-name, .input-card-number, .input-card-cvv{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.purchase-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.form-option select{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    outline: 1px solid gray;
+    width: 100%;
+}
+
+.input-label {
+    width: 100px;
+}
+.input-feild {
+    width: 80%;
+}
+.form-option {
+    width: 40%;
+}
+.errors {
+    display: flex;
+    gap: 200px;
+}
+.error small{
+    color: red;
+}
+
+div.error {
+    margin-top: -15px;
+}
+
+/* .ng-invalid .ng-touched input{
+    border: 1px solid red;
+} */

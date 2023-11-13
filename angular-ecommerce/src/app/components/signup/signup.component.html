@@ -1,0 +1,87 @@
+<div class="signup">
+  <div class="signup-content">
+    <div class="signup-header">
+      <h2>Signup</h2>
+    </div>
+    <div class="signup-body">
+      <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+        <div class="signup-name">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              placeholder="Name"
+              formControlName="name"
+              required
+            />
+            <mat-icon matSuffix>input</mat-icon>
+            <mat-error *ngIf="!reactiveForm.get('name')!.valid">Name is required</mat-error>
+            <mat-error *ngIf="reactiveForm.get('name')!.hasError('whitespace')">Atleast 2 chars req</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="signup-email">
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="abc@example.com"
+              formControlName="email"
+              required
+            />
+            <button type="button" mat-icon-button matSuffix>
+              <mat-icon>email</mat-icon>
+            </button>
+            <mat-error *ngIf="reactiveForm.get('email')!.hasError('required')">Mail is required</mat-error>
+            <mat-error *ngIf="reactiveForm.get('email')!.hasError('email')">Enter a valid mail</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="signup-number">
+          <mat-form-field>
+            <mat-label>Mobile</mat-label>
+            <input matInput formControlName="mobile" required />
+            <mat-icon matSuffix> phone</mat-icon>
+            <mat-error *ngIf="reactiveForm.get('mobile')!.hasError('required')">Mobile number is required</mat-error>
+            <mat-error *ngIf="reactiveForm.get('mobile')!.hasError('pattern')">Please, Enter 10 digit Mobile Number.</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="signup-password">
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hide ? 'password' : 'text'"
+              required
+            />
+            <button
+              type="button"
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error *ngIf="reactiveForm.get('password')!.hasError('required')">Password is required</mat-error>
+            <mat-error *ngIf="reactiveForm.get('password')!.hasError('pattern')">Password should be 8 characters in length, Lowercase letters, Uppercase letters, Numbers, Special characters</mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="submit">
+          <button type="submit" [disabled]="!reactiveForm.valid">Signup</button>
+        </div>
+
+        <div class="signup-login">
+          <p>
+            Already have an account
+            <a routerLink="/login">Login</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
