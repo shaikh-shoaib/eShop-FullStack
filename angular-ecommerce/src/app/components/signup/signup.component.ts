@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 
@@ -20,7 +21,8 @@ export class SignupComponent implements OnInit{
     password: ''
   }
 
-  constructor(private authService: AuthService, private router: Router, private validatorService: ValidatorService) { }
+  constructor(private authService: AuthService, private router: Router, private validatorService: ValidatorService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
@@ -37,23 +39,20 @@ export class SignupComponent implements OnInit{
     this.credentials.password = this.reactiveForm.value.password;
     this.credentials.mobile = this.reactiveForm.value.mobile;
 
-    console.log(this.credentials.name);
-    console.log(this.credentials.mobile);
-    console.log(this.credentials.email);
-    console.log(this.credentials.password);
-
     this.authService.signup(this.credentials).subscribe(
       (response) => {
-        console.log('response,',response);
-
+        // console.log('response,',response);
+        this.toastr.success('Signup Successful')
         this.router.navigateByUrl('/login')
-        console.log('Signup Successfull!!!');
+        // console.log('Signup Successfull!!!');
       },
       (error) => {
+        this.toastr.error(error.error.text ? error.error.text : error.error)
         console.log('error, ',error);
+      },
+      () => {
+        this.reactiveForm.reset();
       }
-    )
-
-    this.reactiveForm.reset();
+    );
   }
 }

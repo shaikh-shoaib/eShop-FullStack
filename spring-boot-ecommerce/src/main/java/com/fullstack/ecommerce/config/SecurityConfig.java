@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth->auth.requestMatchers(HttpMethod.POST,"/api/checkout/**").authenticated()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers("/auth/signup").permitAll()
                                 .anyRequest().authenticated())

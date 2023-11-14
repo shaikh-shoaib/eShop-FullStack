@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CartItem } from 'src/app/models/cart-items';
-import { Customer } from 'src/app/models/cutomer';
 import { Order } from 'src/app/models/order';
 import { OrderItem } from 'src/app/models/order-item';
 import { Purchase } from 'src/app/models/purchase';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutFormService } from 'src/app/services/checkout-form.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
@@ -27,7 +26,8 @@ export class CheckoutComponent implements OnInit{
 
   states: string[] = [];
 
-  constructor(private cartService: CartService, private formBuilder: FormBuilder, private checkoutFormService: CheckoutFormService, private checkoutService: CheckoutService, private router: Router) { 
+  constructor(private cartService: CartService, private formBuilder: FormBuilder, private checkoutFormService: CheckoutFormService, 
+              private checkoutService: CheckoutService, private router: Router, private authService: AuthService) { 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
@@ -52,7 +52,10 @@ export class CheckoutComponent implements OnInit{
   }
 
   ngOnInit(): void {
-
+    if(!this.authService.loggedIn) {
+      this.router.navigate(['/login']);
+    }
+    
     this.cartService.totalPrice.subscribe(
       data => {
         this.totalPrice = data;

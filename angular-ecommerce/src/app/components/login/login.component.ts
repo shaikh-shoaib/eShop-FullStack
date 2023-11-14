@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit{
     password: ''
   }
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
@@ -36,17 +37,20 @@ export class LoginComponent implements OnInit{
 
     this.authService.generateToken(this.credentials).subscribe(
       (response: any) => {
-        console.log('response,',response);
+        // console.log('response,',response);
+        this.toastr.success('Login Successfull');
 
         this.authService.logIn(response.jwtToken);
         this.router.navigateByUrl('/products');
-        // window.location.reload();
+
       },
       error => {
+        this.toastr.error(error.error.text ? error.error.text : error.error);
         console.log('error,',error);
+      },
+      () => {
+        this.reactiveForm.reset();
       }
     );
-
-    this.reactiveForm.reset();
   }
 }

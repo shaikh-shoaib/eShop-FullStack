@@ -23,7 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AuthInterceptor } from './services/auth.interceptor';
-import { LayoutComponent } from './components/layout/layout.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -38,7 +38,6 @@ import { LayoutComponent } from './components/layout/layout.component';
     LoginComponent,
     CartViewComponent,
     CheckoutComponent,
-    LayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +52,9 @@ import { LayoutComponent } from './components/layout/layout.component';
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatTableModule
+    MatTableModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [ 
     { 

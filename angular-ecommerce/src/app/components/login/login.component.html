@@ -48,10 +48,7 @@
               *ngIf="reactiveForm.get('password')!.hasError('required')"
               >Enter password</mat-error
             >
-            <!-- <mat-error
-              *ngIf="reactiveForm.get('password')!.hasError('whitespace')"
-              >Password cannot contain space</mat-error
-            > -->
+            
             <mat-error *ngIf="reactiveForm.get('password')!.hasError('pattern')"
               >Password should be 8 characters in length, Lowercase letters,
               Uppercase letters, Numbers, Special characters</mat-error

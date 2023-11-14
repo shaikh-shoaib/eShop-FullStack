@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,8 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   private baseUrl = "http://localhost:8080/auth";
+
+  loggedIn = new BehaviorSubject(false);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -16,6 +19,7 @@ export class AuthService {
 
   logIn(token: string) {
     localStorage.setItem('token', token);
+    this.loggedIn.next(true);
     return true;
   }
 
@@ -30,6 +34,7 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('token');
+    this.loggedIn.next(false);
     return true;
   }
 
