@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -16,16 +16,20 @@ export class LoginComponent implements OnInit{
   credentials = {
     email: '',
     password: ''
-  }
+  };
+  returnUrl: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) { }
+  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       // password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}'), this.validatorService.noWhitespaceValidator])
       password: new FormControl('', [Validators.required])
-    })
+    });
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   onSubmit() {
@@ -41,8 +45,8 @@ export class LoginComponent implements OnInit{
         this.toastr.success('Login Successfull');
 
         this.authService.logIn(response.jwtToken);
-        this.router.navigateByUrl('/products');
-
+        this.router.navigate([this.returnUrl]);
+        // this.router.navigateByUrl('/products');
       },
       error => {
         this.toastr.error(error.error.text ? error.error.text : error.error);

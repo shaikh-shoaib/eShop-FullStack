@@ -9,7 +9,7 @@ export class AuthService {
 
   private baseUrl = "http://localhost:8080/auth";
 
-  loggedIn = new BehaviorSubject(false);
+  loggedIn = new BehaviorSubject(this.isLoggedIn());
 
   constructor(private httpClient: HttpClient) { }
 
