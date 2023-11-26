@@ -1,5 +1,6 @@
 package com.fullstack.ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Address {
     private String state;
     @Column(name = "pin_code")
     private String pinCode;
+    @JsonIgnore
     @OneToOne
     @PrimaryKeyJoinColumn
     private Order order;

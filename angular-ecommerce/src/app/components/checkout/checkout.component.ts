@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Order } from 'src/app/models/order';
 import { OrderItem } from 'src/app/models/order-item';
 import { Purchase } from 'src/app/models/purchase';
@@ -8,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutFormService } from 'src/app/services/checkout-form.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
+import { ValidatorService } from 'src/app/services/validator.service';
 
 @Component({
   selector: 'app-checkout',
@@ -27,28 +29,29 @@ export class CheckoutComponent implements OnInit{
   states: string[] = [];
 
   constructor(private cartService: CartService, private formBuilder: FormBuilder, private checkoutFormService: CheckoutFormService, 
-              private checkoutService: CheckoutService, private router: Router, private authService: AuthService) { 
+              private checkoutService: CheckoutService, private router: Router, private authService: AuthService, private validatorService: ValidatorService, private toastr: ToastrService) { 
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: new FormControl('', [Validators.required, Validators.minLength(2)]),
-        lastName: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        firstName: new FormControl('', [Validators.required, this.validatorService.noWhitespaceValidator, Validators.minLength(2)]),
+        lastName: new FormControl('', [Validators.required, this.validatorService.noWhitespaceValidator, Validators.minLength(2)]),
         email: new FormControl('', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
-        street: new FormControl('', [Validators.required, Validators.minLength(2)]),
-        city: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        street: new FormControl('', [Validators.required, this.validatorService.noWhitespaceValidator, Validators.minLength(2)]),
+        city: new FormControl('', [Validators.required, this.validatorService.noWhitespaceValidator, Validators.minLength(2)]),
         state: new FormControl('', Validators.required),
         pinCode: new FormControl('', [Validators.required, Validators.pattern('[0-9]{6}')]),
       }),
       creditCard: this.formBuilder.group({
         cardType:  new FormControl('', [Validators.required]),
-        nameOnCard:  new FormControl('', [Validators.required, Validators.minLength(2)]),
+        nameOnCard:  new FormControl('', [Validators.required, this.validatorService.noWhitespaceValidator, Validators.minLength(2)]),
         cardNumber:  new FormControl('', [Validators.required, Validators.pattern('[0-9]{16}')]),
         securityCode:  new FormControl('', [Validators.required, Validators.pattern('[0-9]{3}')]),
         expirationMonth:  new FormControl('', Validators.required),
         expirationYear:  new FormControl('', Validators.required),
       })
-    })
+    }, { updateOn: 'submit'})
   }
 
   ngOnInit(): void {
@@ -116,11 +119,16 @@ export class CheckoutComponent implements OnInit{
 
     this.checkoutService.placeOrder(purchase).subscribe({
         next: response => {
+          this.toastr.success('Order Placed!');
           alert(`Your order has been placed.\nOrder Tracking Number: ${response.trackingNumber}`)
 
           this.resetCart()
         },
-        error: err => alert(`There was an error: ${err.message}`)
+        error: err => {
+          this.toastr.error('Error placing order!');
+          alert(`There was an error: ${err.message}`);
+          console.log(err);
+        }
     });
 
     // console.log(this.checkoutFormGroup.get('customer')!.value);

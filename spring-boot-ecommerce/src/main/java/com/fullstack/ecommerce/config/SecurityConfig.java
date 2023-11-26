@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .cors(cors->cors.disable())
                 .authorizeHttpRequests(
                         auth->auth.requestMatchers(HttpMethod.POST,"/api/checkout/**").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/orders/**").authenticated()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 .requestMatchers("/api/**").permitAll()
                                 .requestMatchers("/auth/login").permitAll()

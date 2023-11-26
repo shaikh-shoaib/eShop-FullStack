@@ -21,20 +21,34 @@
                     </div>
                     <div class="errors">
                         <div class="error" *ngIf="firstName!.invalid && (firstName!.dirty || firstName!.touched)">
-                            <small *ngIf="firstName!.hasError('required')">
+                            <small *ngIf="firstName!.hasError('required'); else else1">
                                 FirstName is required
                             </small>
-                            <small *ngIf="firstName!.hasError('minlength')">
-                                FirstName must be atleast 2 characters long
-                            </small>
+                            <ng-template #else1>
+                                <small *ngIf="firstName!.hasError('whitespace'); else minLen1" >
+                                    FirstName cannot contain space
+                                </small>
+                                <ng-template #minLen1>
+                                    <small *ngIf="firstName!.hasError('minlength')">
+                                        FirstName must be atleast 2 characters long
+                                    </small>
+                                </ng-template>
+                            </ng-template>
                         </div>
                         <div class="error" *ngIf="lastName!.invalid && (lastName!.dirty || lastName!.touched)">
-                            <small *ngIf="lastName!.hasError('required')">
+                            <small *ngIf="lastName!.hasError('required'); else else2">
                                 LastName is required
                             </small>
-                            <small *ngIf="lastName!.hasError('minlength')">
-                                LastName must be atleast 2 characters long
-                            </small>
+                            <ng-template #else2>
+                                <small *ngIf="lastName!.hasError('whitespace'); else minLen2" >
+                                    LastName cannot contain space
+                                </small>
+                                <ng-template #minLen2>
+                                    <small *ngIf="lastName!.hasError('minlength')">
+                                        LastName must be atleast 2 characters long
+                                    </small>
+                                </ng-template>
+                            </ng-template>
                         </div>
                     </div>
                     <div class="input-email">
@@ -69,12 +83,19 @@
                         </div>
                     </div>
                     <div class="error" *ngIf="street!.invalid && (street!.dirty || street!.touched)">
-                        <small *ngIf="street!.hasError('required')">
+                        <small *ngIf="street!.hasError('required'); else else3">
                             Street is required
                         </small>
-                        <small *ngIf="street!.hasError('minlength')">
-                            Street must be atleast 2 characters long
-                        </small>
+                        <ng-template #else3>
+                            <small *ngIf="street!.hasError('whitespace'); else minLen3" >
+                                Street cannot contain space
+                            </small>
+                            <ng-template #minLen3>
+                                <small *ngIf="street!.hasError('minlength')">
+                                    Street must be atleast 2 characters long
+                                </small>
+                            </ng-template>
+                        </ng-template> 
                     </div>
                 
                     <div class="input-city">
@@ -86,12 +107,19 @@
                         </div>
                     </div>
                     <div class="error" *ngIf="city!.invalid && (city!.dirty || city!.touched)">
-                        <small *ngIf="city!.hasError('required')">
+                        <small *ngIf="city!.hasError('required'); else else4">
                             City is required
                         </small>
-                        <small *ngIf="city!.hasError('minlength')">
-                            City must be atleast 2 characters long
-                        </small>
+                        <ng-template #else4>
+                            <small *ngIf="city!.hasError('whitespace'); else minLen4" >
+                                City cannot contain space
+                            </small>
+                            <ng-template #minLen4>
+                                <small *ngIf="city!.hasError('minlength')">
+                                    City must be atleast 2 characters long
+                                </small>
+                            </ng-template>
+                        </ng-template>  
                     </div>
 
                     <div class="input-country">
@@ -162,12 +190,19 @@
                         </div>
                     </div>
                     <div class="error" *ngIf="nameOnCard!.invalid && (nameOnCard!.dirty || nameOnCard!.touched)">
-                        <small *ngIf="nameOnCard!.hasError('required')">
+                        <small *ngIf="nameOnCard!.hasError('required'); else else5">
                             Name on card is required
                         </small>
-                        <small *ngIf="nameOnCard!.hasError('minlength')">
-                            Name on card must be 2 characters long
-                        </small>
+                        <ng-template #else5>
+                            <small *ngIf="nameOnCard!.hasError('whitespace'); else minLen5" >
+                                Name cannot contain space
+                            </small>
+                            <ng-template #minLen5>
+                                <small *ngIf="nameOnCard!.hasError('minlength')">
+                                    Name must be atleast 2 characters long
+                                </small>
+                            </ng-template>
+                        </ng-template>
                     </div>
                     
                     <div class="input-card-number">
