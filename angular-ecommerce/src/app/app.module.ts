@@ -24,6 +24,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ToastrModule } from 'ngx-toastr';
     LoginComponent,
     CartViewComponent,
     CheckoutComponent,
+    OrderHistoryComponent,
   ],
   imports: [
     BrowserModule,

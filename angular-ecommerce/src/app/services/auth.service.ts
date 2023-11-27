@@ -17,8 +17,9 @@ export class AuthService {
     return this.httpClient.post(`${this.baseUrl}/login`, credentials);
   }
 
-  logIn(token: string) {
+  logIn(token: string, email: string) {
     localStorage.setItem('token', token);
+    localStorage.setItem('userEmail', email);
     this.loggedIn.next(true);
     return true;
   }
@@ -34,6 +35,7 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userEmail');
     this.loggedIn.next(false);
     return true;
   }
@@ -44,5 +46,9 @@ export class AuthService {
 
   signup(credentials: any) {
     return this.httpClient.post(`${this.baseUrl}/signup`,credentials);
+  }
+
+  getEmail() {
+    return localStorage.getItem('userEmail');
   }
 }

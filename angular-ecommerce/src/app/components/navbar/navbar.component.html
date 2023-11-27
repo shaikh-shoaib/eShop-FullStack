@@ -17,6 +17,9 @@
 
     <div class="nav-list">
         <div class="login">
+            <a *ngIf="isLoggedIn" routerLink="orders">Orders</a>
+        </div>
+        <div class="login">
             <a *ngIf="!isLoggedIn" routerLink="login">Login</a>
             <!-- <a *ngIf="isLoggedIn">User</a> -->
             <a *ngIf="isLoggedIn" (click)="logOut()" style="cursor: pointer;">Logout</a>

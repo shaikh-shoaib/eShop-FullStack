@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit{
         // console.log('response,',response);
         this.toastr.success('Login Successfull');
 
-        this.authService.logIn(response.jwtToken);
+        // this.authService.logIn(response.jwtToken);
+        this.authService.logIn(response.jwtToken, this.credentials.email);
         this.router.navigate([this.returnUrl]);
         // this.router.navigateByUrl('/products');
       },
