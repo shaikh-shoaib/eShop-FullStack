@@ -1,287 +1,372 @@
 <div class="main-content">
-    <div class="section-content">
+  <div class="section-content">
+    <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+      <div formGroupName="customer" class="form-area">
+        <h3>Customer</h3>
+        <div class="form-input">
+          <div class="input-name">
+            <div class="input-name-div">
+              <label>First Name</label>
+              <div>
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  formControlName="firstName"
+                />
+              </div>
+            </div>
+            <div class="input-name-div">
+              <label>Last Name</label>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  formControlName="lastName"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="errors">
+            <div
+              class="error"
+              *ngIf="
+                firstName!.invalid && (firstName!.dirty || firstName!.touched)
+              "
+            >
+              <small *ngIf="firstName!.hasError('required'); else else1">
+                FirstName is required
+              </small>
+              <ng-template #else1>
+                <small *ngIf="firstName!.hasError('whitespace'); else minLen1">
+                  FirstName cannot contain space
+                </small>
+                <ng-template #minLen1>
+                  <small *ngIf="firstName!.hasError('minlength')">
+                    FirstName must be atleast 2 characters long
+                  </small>
+                </ng-template>
+              </ng-template>
+            </div>
+            <div
+              class="error"
+              *ngIf="
+                lastName!.invalid && (lastName!.dirty || lastName!.touched)
+              "
+            >
+              <small *ngIf="lastName!.hasError('required'); else else2">
+                LastName is required
+              </small>
+              <ng-template #else2>
+                <small *ngIf="lastName!.hasError('whitespace'); else minLen2">
+                  LastName cannot contain space
+                </small>
+                <ng-template #minLen2>
+                  <small *ngIf="lastName!.hasError('minlength')">
+                    LastName must be atleast 2 characters long
+                  </small>
+                </ng-template>
+              </ng-template>
+            </div>
+          </div>
+          <div class="input-email">
+            <div class="input-label">
+              <label>Email</label>
+            </div>
+            <div class="input-email">
+              <input
+                type="text"
+                placeholder="Email Address"
+                formControlName="email"
+              />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="email!.invalid && (email!.dirty || email!.touched)"
+          >
+            <small *ngIf="email!.hasError('required')">
+              Email is required
+            </small>
+            <small *ngIf="email!.hasError('pattern')">
+              Email must be a valid email address format
+            </small>
+          </div>
+        </div>
+      </div>
 
-        <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
-            <div formGroupName="customer" class="form-area">
-                <h3>Customer</h3>
-                <div class="form-input">
-                    <div class="input-name">
-                        <div class="input-name-div">
-                            <label >First Name</label>
-                            <div >
-                                <input type="text" placeholder="First Name" formControlName="firstName">
-                            </div>
-                        </div>
-                        <div class="input-name-div">
-                            <label >Last Name</label>
-                            <div >
-                                <input type="text" placeholder="Last Name" formControlName="lastName">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="errors">
-                        <div class="error" *ngIf="firstName!.invalid && (firstName!.dirty || firstName!.touched)">
-                            <small *ngIf="firstName!.hasError('required'); else else1">
-                                FirstName is required
-                            </small>
-                            <ng-template #else1>
-                                <small *ngIf="firstName!.hasError('whitespace'); else minLen1" >
-                                    FirstName cannot contain space
-                                </small>
-                                <ng-template #minLen1>
-                                    <small *ngIf="firstName!.hasError('minlength')">
-                                        FirstName must be atleast 2 characters long
-                                    </small>
-                                </ng-template>
-                            </ng-template>
-                        </div>
-                        <div class="error" *ngIf="lastName!.invalid && (lastName!.dirty || lastName!.touched)">
-                            <small *ngIf="lastName!.hasError('required'); else else2">
-                                LastName is required
-                            </small>
-                            <ng-template #else2>
-                                <small *ngIf="lastName!.hasError('whitespace'); else minLen2" >
-                                    LastName cannot contain space
-                                </small>
-                                <ng-template #minLen2>
-                                    <small *ngIf="lastName!.hasError('minlength')">
-                                        LastName must be atleast 2 characters long
-                                    </small>
-                                </ng-template>
-                            </ng-template>
-                        </div>
-                    </div>
-                    <div class="input-email">
-                        <div class="input-label">
-                            <label >Email</label>
-                        </div>
-                        <div class="input-email">
-                            <input type="text" placeholder="Email Address" formControlName="email">
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="email!.invalid && (email!.dirty || email!.touched)">
-                        <small *ngIf="email!.hasError('required')">
-                            Email is required
-                        </small>
-                        <small *ngIf="email!.hasError('pattern')">
-                            Email must be a valid email address format
-                        </small>
-                    </div>
-                </div>
+      <div formGroupName="shippingAddress" class="form-area">
+        <h3>Shipping Address</h3>
+        <div class="form-input">
+          <div class="input-street">
+            <div class="input-label">
+              <label>Street</label>
+            </div>
+            <div class="input-feild">
+              <input
+                type="text"
+                placeholder="Street"
+                formControlName="street"
+              />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="street!.invalid && (street!.dirty || street!.touched)"
+          >
+            <small *ngIf="street!.hasError('required'); else else3">
+              Street is required
+            </small>
+            <ng-template #else3>
+              <small *ngIf="street!.hasError('whitespace'); else minLen3">
+                Street cannot contain space
+              </small>
+              <ng-template #minLen3>
+                <small *ngIf="street!.hasError('minlength')">
+                  Street must be atleast 2 characters long
+                </small>
+              </ng-template>
+            </ng-template>
+          </div>
+
+          <div class="input-city">
+            <div class="input-label">
+              <label>City</label>
+            </div>
+            <div class="input-feild">
+              <input type="text" placeholder="City" formControlName="city" />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="city!.invalid && (city!.dirty || city!.touched)"
+          >
+            <small *ngIf="city!.hasError('required'); else else4">
+              City is required
+            </small>
+            <ng-template #else4>
+              <small *ngIf="city!.hasError('whitespace'); else minLen4">
+                City cannot contain space
+              </small>
+              <ng-template #minLen4>
+                <small *ngIf="city!.hasError('minlength')">
+                  City must be atleast 2 characters long
+                </small>
+              </ng-template>
+            </ng-template>
+          </div>
+
+          <div class="input-country">
+            <div class="input-label">
+              <label>State</label>
+            </div>
+            <div class="form-option">
+              <select formControlName="state" value="state">
+                <option value="" selected disabled>State</option>
+                <option *ngFor="let state of states">{{ state }}</option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="state!.invalid && (state!.dirty || state!.touched)"
+          >
+            <small *ngIf="state!.hasError('required')">
+              state is required
+            </small>
+          </div>
+
+          <div class="input-pin">
+            <div class="input-label">
+              <label>Pin Code</label>
+            </div>
+            <div class="input-feild">
+              <input
+                type="text"
+                placeholder="Pin Code / Postal Code"
+                formControlName="pinCode"
+              />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="pinCode!.invalid && (pinCode!.dirty || pinCode!.touched)"
+          >
+            <small *ngIf="pinCode!.hasError('required')">
+              PinCode is required
+            </small>
+            <small *ngIf="pinCode!.hasError('pattern')">
+              PinCode must be 6 digits long
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div formGroupName="creditCard" class="form-area">
+        <h3>Credit Card</h3>
+        <div class="form-input">
+          <div class="input-card-type">
+            <div class="input-label">
+              <label>Card Type</label>
+            </div>
+            <div class="form-option">
+              <select formControlName="cardType">
+                <option value="" selected disabled>Card Type</option>
+                <option>Visa</option>
+                <option>Mastercard</option>
+                <option>Rupay</option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="cardType!.invalid && (cardType!.dirty || cardType!.touched)"
+          >
+            <small *ngIf="cardType!.hasError('required')">
+              Card Type is required
+            </small>
+          </div>
+
+          <div class="input-card-name">
+            <div class="input-label">
+              <label>Name on Card</label>
+            </div>
+            <div class="input-feild">
+              <input
+                type="text"
+                placeholder="Name on card"
+                formControlName="nameOnCard"
+              />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="
+              nameOnCard!.invalid && (nameOnCard!.dirty || nameOnCard!.touched)
+            "
+          >
+            <small *ngIf="nameOnCard!.hasError('required'); else else5">
+              Name on card is required
+            </small>
+            <ng-template #else5>
+              <small *ngIf="nameOnCard!.hasError('whitespace'); else minLen5">
+                Name cannot contain space
+              </small>
+              <ng-template #minLen5>
+                <small *ngIf="nameOnCard!.hasError('minlength')">
+                  Name must be atleast 2 characters long
+                </small>
+              </ng-template>
+            </ng-template>
+          </div>
+
+          <div class="input-card-number">
+            <div class="input-label">
+              <label>Card Number</label>
+            </div>
+            <div class="input-feild">
+              <input
+                type="text"
+                placeholder="Card number"
+                formControlName="cardNumber"
+              />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="
+              cardNumber!.invalid && (cardNumber!.dirty || cardNumber!.touched)
+            "
+          >
+            <small *ngIf="cardNumber!.hasError('required')">
+              Card number is required
+            </small>
+            <small *ngIf="cardNumber!.hasError('pattern')">
+              Card number must be 16 digits long
+            </small>
+          </div>
+
+          <div class="input-card-cvv">
+            <div class="input-label">
+              <label>Security Code</label>
+            </div>
+            <div class="input-feild">
+              <input
+                type="text"
+                placeholder="CVV number"
+                formControlName="securityCode"
+              />
+            </div>
+          </div>
+          <div
+            class="error"
+            *ngIf="
+              securityCode!.invalid &&
+              (securityCode!.dirty || securityCode!.touched)
+            "
+          >
+            <small *ngIf="securityCode!.hasError('required')">
+              Security Code is required
+            </small>
+            <small *ngIf="securityCode!.hasError('pattern')">
+              Security Code must be 3 digits long
+            </small>
+          </div>
+
+          <div class="expiry-date">
+            <div class="date">
+              <label>Expiration Month</label>
+              <select formControlName="expirationMonth">
+                <option value="" selected disabled>Month</option>
+                <option *ngFor="let month of creditCardMonths">
+                  {{ month }}
+                </option>
+              </select>
             </div>
 
-            <div formGroupName="shippingAddress" class="form-area">
-                <h3>Shipping Address</h3>
-                <div class="form-input">
-
-                    <div class="input-street">
-                        <div class="input-label">
-                            <label >Street</label>
-                        </div>
-                        <div class="input-feild">
-                            <input type="text" placeholder="Street" formControlName="street">
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="street!.invalid && (street!.dirty || street!.touched)">
-                        <small *ngIf="street!.hasError('required'); else else3">
-                            Street is required
-                        </small>
-                        <ng-template #else3>
-                            <small *ngIf="street!.hasError('whitespace'); else minLen3" >
-                                Street cannot contain space
-                            </small>
-                            <ng-template #minLen3>
-                                <small *ngIf="street!.hasError('minlength')">
-                                    Street must be atleast 2 characters long
-                                </small>
-                            </ng-template>
-                        </ng-template> 
-                    </div>
-                
-                    <div class="input-city">
-                        <div class="input-label">
-                            <label >City</label>
-                        </div>
-                        <div class="input-feild">
-                            <input type="text" placeholder="City" formControlName="city">
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="city!.invalid && (city!.dirty || city!.touched)">
-                        <small *ngIf="city!.hasError('required'); else else4">
-                            City is required
-                        </small>
-                        <ng-template #else4>
-                            <small *ngIf="city!.hasError('whitespace'); else minLen4" >
-                                City cannot contain space
-                            </small>
-                            <ng-template #minLen4>
-                                <small *ngIf="city!.hasError('minlength')">
-                                    City must be atleast 2 characters long
-                                </small>
-                            </ng-template>
-                        </ng-template>  
-                    </div>
-
-                    <div class="input-country">
-                        <div class="input-label">
-                            <label >State</label>
-                        </div>
-                        <div class="form-option">
-                            <select formControlName="state" value="state">
-                                <option value="" selected disabled>State</option>
-                                <option *ngFor="let state of states">{{state}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="state!.invalid && (state!.dirty || state!.touched)">
-                        <small *ngIf="state!.hasError('required')">
-                            state is required
-                        </small>
-                    </div>
-                    
-                    <div class="input-pin">
-                        <div class="input-label">
-                            <label >Pin Code</label>
-                        </div>
-                        <div class="input-feild">
-                            <input type="text" placeholder="Pin Code / Postal Code" formControlName="pinCode">
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="pinCode!.invalid && (pinCode!.dirty || pinCode!.touched)">
-                        <small *ngIf="pinCode!.hasError('required')">
-                            PinCode is required
-                        </small>
-                        <small *ngIf="pinCode!.hasError('pattern')">
-                            PinCode must be 6 digits long
-                        </small>
-                    </div>
-                
-                </div>
+            <div class="date">
+              <label>Expiration Year</label>
+              <select formControlName="expirationYear">
+                <option value="" selected disabled>Year</option>
+                <option *ngFor="let year of creditCardYears">{{ year }}</option>
+              </select>
             </div>
-
-            <div formGroupName="creditCard" class="form-area">
-                <h3>Credit Card</h3>
-                <div class="form-input">
-                    <div class="input-card-type">
-                        <div class="input-label">
-                            <label >Card Type</label>
-                        </div>
-                        <div class="form-option">
-                            <select formControlName="cardType">
-                                <option value="" selected disabled>Card Type</option>
-                                <option>Visa</option>
-                                <option>Mastercard</option>
-                                <option>Rupay</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="cardType!.invalid && (cardType!.dirty || cardType!.touched)">
-                        <small *ngIf="cardType!.hasError('required')">
-                            Card Type is required
-                        </small>
-                    </div>
-                    
-                    <div class="input-card-name">
-                        <div class="input-label">
-                            <label >Name on Card</label>
-                        </div>
-                        <div class="input-feild">
-                            <input type="text" placeholder="Name on card" formControlName="nameOnCard">
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="nameOnCard!.invalid && (nameOnCard!.dirty || nameOnCard!.touched)">
-                        <small *ngIf="nameOnCard!.hasError('required'); else else5">
-                            Name on card is required
-                        </small>
-                        <ng-template #else5>
-                            <small *ngIf="nameOnCard!.hasError('whitespace'); else minLen5" >
-                                Name cannot contain space
-                            </small>
-                            <ng-template #minLen5>
-                                <small *ngIf="nameOnCard!.hasError('minlength')">
-                                    Name must be atleast 2 characters long
-                                </small>
-                            </ng-template>
-                        </ng-template>
-                    </div>
-                    
-                    <div class="input-card-number">
-                        <div class="input-label">
-                            <label >Card Number</label>
-                        </div>
-                        <div class="input-feild">
-                            <input type="text" placeholder="Card number" formControlName="cardNumber">
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="cardNumber!.invalid && (cardNumber!.dirty || cardNumber!.touched)">
-                        <small *ngIf="cardNumber!.hasError('required')">
-                            Card number is required
-                        </small>
-                        <small *ngIf="cardNumber!.hasError('pattern')">
-                            Card number must be 16 digits long
-                        </small>
-                    </div>
-                
-                    <div class="input-card-cvv">
-                        <div class="input-label">
-                            <label >Security Code</label>
-                        </div>
-                        <div class="input-feild">
-                            <input type="text" placeholder="CVV number" formControlName="securityCode">
-                        </div>
-                    </div>
-                    <div class="error" *ngIf="securityCode!.invalid && (securityCode!.dirty || securityCode!.touched)">
-                        <small *ngIf="securityCode!.hasError('required')">
-                            Security Code is required
-                        </small>
-                        <small *ngIf="securityCode!.hasError('pattern')">
-                            Security Code must be 3 digits long
-                        </small>
-                    </div>
-
-                    <div class="expiry-date">
-                        <div class="date">
-                            <label >Expiration Month</label>
-                            <select formControlName="expirationMonth">
-                                <option value="" selected disabled>Month</option>
-                                <option *ngFor="let month of creditCardMonths">{{ month }}</option>
-                            </select>
-                        </div>
-                        
-                        <div class="date">
-                            <label >Expiration Year</label>
-                            <select formControlName="expirationYear">
-                                <option value="" selected disabled>Year</option>
-                                <option *ngFor="let year of creditCardYears">{{ year }}</option>
-                            </select>
-                        </div>
-                        
-                    </div>
-                    <div class="errors">
-                        <div class="error" *ngIf="expirationMonth!.invalid && (expirationMonth!.dirty || expirationMonth!.touched)">
-                            <small *ngIf="expirationMonth!.hasError('required')">
-                                Expiration Month is required
-                            </small>
-                        </div>
-                        <div class="error" *ngIf="expirationYear!.invalid && (expirationYear!.dirty || expirationYear!.touched)">
-                            <small *ngIf="expirationYear!.hasError('required')">
-                                Expiration Year is required
-                            </small>
-                        </div>
-                    </div>
-
-                </div>
+          </div>
+          <div class="errors">
+            <div
+              class="error"
+              *ngIf="
+                expirationMonth!.invalid &&
+                (expirationMonth!.dirty || expirationMonth!.touched)
+              "
+            >
+              <small *ngIf="expirationMonth!.hasError('required')">
+                Expiration Month is required
+              </small>
             </div>
+            <div
+              class="error"
+              *ngIf="
+                expirationYear!.invalid &&
+                (expirationYear!.dirty || expirationYear!.touched)
+              "
+            >
+              <small *ngIf="expirationYear!.hasError('required')">
+                Expiration Year is required
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div class="form-area">
-                <h3>Review Your Order</h3>
-                <b>Total Quantity: {{ totalQuantity }}</b>
-                <h4>Shipping: FREE</h4>
-                <B>Total Price: {{ totalPrice | currency: 'INR' }}</B>
-            </div>
-            <div class="purchase-btn">
-                <button mat-raised-button color="warn" >Purchase</button>
-            </div>
-        </form>
-    </div>
+      <div class="form-area">
+        <h3>Review Your Order</h3>
+        <b>Total Quantity: {{ totalQuantity }}</b>
+        <h4>Shipping: FREE</h4>
+        <B>Total Price: {{ totalPrice | currency : "INR" }}</B>
+      </div>
+      <div class="purchase-btn">
+        <button mat-raised-button color="warn">Purchase</button>
+      </div>
+    </form>
+  </div>
 </div>

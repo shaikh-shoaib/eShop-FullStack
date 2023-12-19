@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CartItem } from 'src/app/models/cart-items';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
@@ -8,15 +9,23 @@ import { ProductService } from 'src/app/services/product.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
 })
-export class ProductDetailsComponent implements OnInit{
-
-  product: Product = { id: 0, name: '', description: '', unitPrice: 0, imageUrl: '', unitsInStock: 0, ratings: 0};
+export class ProductDetailsComponent implements OnInit {
+  product: Product = {
+    id: 0,
+    name: '',
+    description: '',
+    unitPrice: 0,
+    imageUrl: '',
+    unitsInStock: 0,
+    ratings: 0,
+  };
 
   productQuantity: number = 0;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute, private cartService: CartService) {  }
+  constructor(private productService: ProductService, private route: ActivatedRoute,
+    private cartService: CartService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.handleProductDetails();
@@ -26,11 +35,14 @@ export class ProductDetailsComponent implements OnInit{
     // fetch product details using service
     const productId = +this.route.snapshot.paramMap.get('id')!;
 
-    this.productService.getProductById(productId).subscribe(
-      data => {
+    this.productService.getProductById(productId).subscribe({
+      next: (data) => {
         this.product = data;
-      }
-    )
+      },
+      error: (err) => {
+        this.toastr.error(err.statusText);
+      },
+    });
   }
 
   addToCart(product: Product) {
@@ -47,7 +59,7 @@ export class ProductDetailsComponent implements OnInit{
 
   getProductQuantity(productId: number) {
     this.productQuantity = this.cartService.getCartItemQuantity(productId);
-    
+
     return this.productQuantity;
   }
 }

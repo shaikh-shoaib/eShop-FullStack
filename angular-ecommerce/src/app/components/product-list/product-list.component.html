@@ -1,38 +1,56 @@
 <div class="main-content">
-    <div class="container">
-        
-        <div *ngFor="let product of products">
-            <div class="product-box">
-                <a routerLink="/products/{{product.id}}">
-                    <img src="{{product.imageUrl}}" alt="{{product.name}}" class="img">
-                </a>
-                <div class="product-details">
-                    <div class="product-name">
-                        <a routerLink="/products/{{product.id}}">
-                            <h2>{{product.name}} </h2>
-                        </a>
-                    </div>
-                    <div class="rating">Ratings {{ product.ratings }} ⭐⭐⭐⭐⭐</div>
-                    <div class="price">Price: {{ product.unitPrice | currency: 'INR' }}</div>
+  <div class="container">
+    <div *ngFor="let product of products">
+      <div class="product-box">
+        <a routerLink="/products/{{ product.id }}">
+          <img
+            src="{{ product.imageUrl }}"
+            alt="{{ product.name }}"
+            class="img"
+          />
+        </a>
+        <div class="product-details">
+          <div class="product-name">
+            <a routerLink="/products/{{ product.id }}">
+              <h2>{{ product.name }}</h2>
+            </a>
+          </div>
+          <div class="rating">
+            <star-rating
+              [starType]="'svg'"
+              [rating]="product.ratings"
+              [showHalfStars]="true"
+              [readOnly]="true"
+            >
+            </star-rating>
+          </div>
+          <div class="price">
+            Price: {{ product.unitPrice | currency : "INR" }}
+          </div>
 
-                    <div *ngIf="getProductQuantity(product.id) > 0; else AddRemoveBtn">
-                        <div class="add-remove-buttons">
-                            <div  class="remove-icon" (click)="decrementQuantity(product)"><mat-icon>remove_circle_outline</mat-icon></div>
-                            <span> {{ productQuantity }} </span>
-                            <div class="add-icon" (click)="addToCart(product)"><mat-icon>add_circle_outline</mat-icon></div>
-                        </div>
-                    </div>
-                    
-                    <ng-template #AddRemoveBtn>
-                        <button class="btn" (click)="addToCart(product)">Add to cart</button>
-                    </ng-template>
-                </div>
+          <div *ngIf="getProductQuantity(product.id) > 0; else AddRemoveBtn">
+            <div class="add-remove-buttons">
+              <div class="remove-icon" (click)="decrementQuantity(product)">
+                <mat-icon>remove_circle_outline</mat-icon>
+              </div>
+              <span> {{ productQuantity }} </span>
+              <div class="add-icon" (click)="addToCart(product)">
+                <mat-icon>add_circle_outline</mat-icon>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <div *ngIf="products.length === 0">
-            <h1>No products found!</h1>
+          <ng-template #AddRemoveBtn>
+            <button class="btn" (click)="addToCart(product)">
+              Add to cart
+            </button>
+          </ng-template>
         </div>
-
+      </div>
     </div>
+
+    <div *ngIf="products.length === 0">
+      <h1>No products found!</h1>
+    </div>
+  </div>
 </div>

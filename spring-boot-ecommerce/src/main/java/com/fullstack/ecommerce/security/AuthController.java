@@ -41,10 +41,13 @@ public class AuthController {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = this.helper.generateToken(userDetails);
+        Optional<User> user = this.userService.findByEmail(request.getEmail());
 
         JwtResponse response = JwtResponse.builder()
                 .jwtToken(token)
-                .userName(userDetails.getUsername()).build();
+                .userName(userDetails.getUsername())
+                .fullName(user.get().getName())
+                .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { Observable, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { ProductCategory } from '../models/product-category';
 import { Product } from '../models/product';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-  
-  private baseUrl = 'http://localhost:8080/api/products';
+  private baseUrl = environment.baseUrl + '/products';
 
-  private categoryUrl = 'http://localhost:8080/api/product-category';
-  
-  constructor(private httpClient: HttpClient) { }
+  private categoryUrl = environment.baseUrl + '/product-category';
+
+  constructor(private httpClient: HttpClient) {}
 
   getProductCategories(): Observable<ProductCategory[]> {
     return this.httpClient.get<ProductCategory[]>(this.categoryUrl);
@@ -21,11 +21,15 @@ export class ProductService {
 
   getProductList(theCategoryId: number): Observable<Product[]> {
     const searchUrl = `${this.baseUrl}/category/${theCategoryId}`;
-   
-    return  this.httpClient.get<Product[]>(searchUrl);
+
+    return this.httpClient.get<Product[]>(searchUrl);
   }
 
-  getProductListPaginate(thePage: number, thePageSize: number, theCategoryId: number): Observable<GetResponseProduct> {
+  getProductListPaginate(
+    thePage: number,
+    thePageSize: number,
+    theCategoryId: number
+  ): Observable<GetResponseProduct> {
     // http://localhost:8080/api/products/category/1?page=0&size=2
     const searchUrl = `${this.baseUrl}/category/${theCategoryId}?page=${thePage}&size=${thePageSize}`;
 
@@ -40,7 +44,7 @@ export class ProductService {
   getProductById(productId: number): Observable<Product> {
     // http://localhost:8080/api/products/1
     const searchUrl = `${this.baseUrl}/${productId}`;
-    
+
     return this.httpClient.get<Product>(searchUrl);
   }
 }
@@ -48,7 +52,7 @@ export class ProductService {
 export interface GetResponseProduct {
   content: {
     products: Product[];
-  }
+  };
   totalPages: number;
   totalElements: number;
   pageNumber: number;

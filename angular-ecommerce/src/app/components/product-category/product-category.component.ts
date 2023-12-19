@@ -1,6 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductCategory } from '../../models/product-category';
 import { ProductService } from 'src/app/services/product.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-category',
@@ -11,17 +12,20 @@ export class ProductCategoryComponent implements OnInit{
 
   productCategories: ProductCategory[] = [];
 
-  constructor(private productService: ProductService) {  }
+  constructor(private productService: ProductService, private toastr: ToastrService) {  }
 
   ngOnInit(): void {
     this.listProductCategories();
   }
   listProductCategories() {
-    this.productService.getProductCategories().subscribe(
-      data => {
-        console.log('Product categories'+JSON.stringify(data));
+    this.productService.getProductCategories().subscribe({
+      next: (data) => {
+        console.log('Product categories' + JSON.stringify(data));
         this.productCategories = data;
-      }
-    )
+      },
+      error: (err) => {
+        this.toastr.error(err.statusText);
+      },
+    });
   }
 }

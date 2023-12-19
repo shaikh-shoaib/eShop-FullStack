@@ -1,40 +1,52 @@
 <div class="main-content">
-    <div class="image-container">
-        <img src="{{ product.imageUrl }}" alt="{{ product.name }}" />
+  <div class="image-container">
+    <img src="{{ product.imageUrl }}" alt="{{ product.name }}" />
+  </div>
+  <div class="details-container">
+    <div class="heading">
+      <h1>{{ product.name }}</h1>
     </div>
-    <div class="details-container">
-        <div class="heading">
-            <h1>{{ product.name }}</h1>
-        </div>
-        <div class="description">
-            <h3>Description</h3>
-            <p>{{ product.description }}</p>
-        </div>
-        <div class="rating">
-            <p>Ratings {{ product.ratings }} ⭐⭐⭐⭐⭐</p>
-        </div>
-        <div class="price">
-            <p>Price: {{ product.unitPrice | currency : "INR" }}</p>
-        </div>
-
-        <div class="buttons-container">
-            <div *ngIf="getProductQuantity(product.id) > 0; else AddRemoveBtn">
-                <div class="add-remove-buttons">
-                    <div  class="remove-icon" (click)="decrementQuantity(product)"><mat-icon>remove_circle_outline</mat-icon></div>
-                    <span> {{ productQuantity }} </span>
-                    <div class="add-icon" (click)="addToCart(product)"><mat-icon>add_circle_outline</mat-icon></div>
-                </div>
-            </div>
-            
-            <ng-template #AddRemoveBtn>
-                <button class="btn" (click)="addToCart(product)">Add to cart</button>
-            </ng-template>
-    
-            <a mat-raised-button color="accent" routerLink="/cart-details">Go to cart</a>
-        </div>
-
-        <div class="back-button">
-            <a routerLink="/products">Back to Products</a>
-        </div>
+    <div class="description">
+      <h3>Description</h3>
+      <p>{{ product.description }}</p>
     </div>
+    <div class="rating">
+      <star-rating
+        [starType]="'svg'"
+        [rating]="product.ratings"
+        [showHalfStars]="true"
+        [readOnly]="true"
+      >
+      </star-rating>
+    </div>
+    <div class="price">
+      <p>Price: {{ product.unitPrice | currency : "INR" }}</p>
+    </div>
+
+    <div class="buttons-container">
+      <div *ngIf="getProductQuantity(product.id) > 0; else AddRemoveBtn">
+        <div class="add-remove-buttons">
+          <div class="remove-icon" (click)="decrementQuantity(product)">
+            <mat-icon>remove_circle_outline</mat-icon>
+          </div>
+          <span> {{ productQuantity }} </span>
+          <div class="add-icon" (click)="addToCart(product)">
+            <mat-icon>add_circle_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #AddRemoveBtn>
+        <button class="btn" (click)="addToCart(product)">Add to cart</button>
+      </ng-template>
+
+      <a mat-raised-button color="accent" routerLink="/cart-details"
+        >Go to cart</a
+      >
+    </div>
+
+    <div class="back-button">
+      <a routerLink="/products">Back to Products</a>
+    </div>
+  </div>
 </div>
