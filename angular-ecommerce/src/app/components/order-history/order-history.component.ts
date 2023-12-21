@@ -4,13 +4,6 @@ import { OrderHistory } from 'src/app/models/order-history';
 import { AuthService } from 'src/app/services/auth.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 @Component({
   selector: 'app-order-history',
   templateUrl: './order-history.component.html',

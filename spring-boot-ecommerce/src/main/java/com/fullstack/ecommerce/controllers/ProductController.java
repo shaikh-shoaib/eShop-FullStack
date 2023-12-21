@@ -23,8 +23,8 @@ public class ProductController {
 
     @LogExecutionTime
     @GetMapping
-    public List<Product> getAllProducts(Pageable pageable) {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     @LogExecutionTime
@@ -35,13 +35,13 @@ public class ProductController {
 
     @LogExecutionTime
     @GetMapping("/category/{id}")
-    public List<Product> getProductsByCategoryId(@PathVariable("id") Long id) {
-        return productRepository.findByCategoryId(id);
+    public Page<Product> getProductsByCategoryId(@PathVariable("id") Long id, Pageable pageable) {
+        return productRepository.findByCategoryId(id, pageable);
     }
 
     @LogExecutionTime
     @GetMapping("/search")
-    public List<Product> searchProductsByName(@RequestParam("name") String name) {
-        return productRepository.findByNameContaining(name);
+    public Page<Product> searchProductsByName(@RequestParam("name") String name, Pageable pageable) {
+        return productRepository.findByNameContaining(name, pageable);
     }
 }

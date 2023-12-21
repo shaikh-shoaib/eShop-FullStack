@@ -53,4 +53,18 @@
       <h1>No products found!</h1>
     </div>
   </div>
+
+  <mat-paginator
+    *ngIf="products.length !== 0"
+    #paginator
+    class="mat-paginator"
+    (page)="handlePageEvent($event)"
+    [length]="length"
+    [pageSize]="pageSize"
+    [showFirstLastButtons]="true"
+    [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+    [pageIndex]="pageIndex"
+    aria-label="Select page"
+  >
+  </mat-paginator>
 </div>

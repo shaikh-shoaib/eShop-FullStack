@@ -1,5 +1,7 @@
 .main-content {
   padding: 40px;
+  min-height: 85vh;
+  position: relative;
 }
 
 .container {
@@ -91,4 +93,13 @@ button {
 .rating {
   margin-bottom: 0px;
   align-self: start;
+}
+
+.mat-paginator {
+  height: fit-content;
+  width: fit-content;
+  position: absolute;
+  right: 20px;
+  bottom: -30px;
+  background: #e5e5e5;
 }

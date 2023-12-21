@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { ToastrModule } from 'ngx-toastr';
+import { StarRatingModule } from 'angular-star-rating';
+import { MatPaginatorModule } from "@angular/material/paginator"
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +27,6 @@ import { CartViewComponent } from './components/cart-view/cart-view.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
-import { StarRatingModule } from 'angular-star-rating';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { StarRatingModule } from 'angular-star-rating';
     MatTableModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
+    MatPaginatorModule,
   ],
   providers: [ 
     { 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CartItem } from 'src/app/models/cart-items';
 import { Product } from 'src/app/models/product';
@@ -25,7 +25,7 @@ export class ProductDetailsComponent implements OnInit {
   productQuantity: number = 0;
 
   constructor(private productService: ProductService, private route: ActivatedRoute,
-    private cartService: CartService, private toastr: ToastrService) {}
+    private cartService: CartService, private toastr: ToastrService, private router: Router) {}
 
   ngOnInit(): void {
     this.handleProductDetails();
@@ -34,6 +34,11 @@ export class ProductDetailsComponent implements OnInit {
   handleProductDetails() {
     // fetch product details using service
     const productId = +this.route.snapshot.paramMap.get('id')!;
+
+    if (!productId) {
+      this.router.navigate(['/']);
+      return;
+    }
 
     this.productService.getProductById(productId).subscribe({
       next: (data) => {
